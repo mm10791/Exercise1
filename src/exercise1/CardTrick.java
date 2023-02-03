@@ -18,17 +18,29 @@ public class CardTrick {
         Random random = new Random();
 
         for (int i = 0; i < hand.length; i++) {
-            Card card = new Card();
-            card.setValue(random.nextInt(8));
-            card.setSuit(Card.SUITS[random.nextInt(0, 4)]);
+            int value = input.nextInt();
+            String suit = (Card.SUITS[random.nextInt(0, 4)]);
+            
+            Card card = new Card(value, suit);
             hand[i] = card;
             // Hint: You can use Random -> random.nextInt(n) to get a random number between 0 and n-1 (inclusive)
             //       Don't worry about duplicates at this point
         }
-        System.out.print("Guess a value!");
-        String valueInput = input.nextLine();
+        System.out.println("Here are the cards in your hand");
+        for (Card card: hand) {
+            System.out.printf("%d of %s\n", card.getValue(), card.getSuit());
+        }
+        
         System.out.print("Guess a suit!");
-        String suitInput = input.nextLine();
+        for (int i = 0; i < Card.SUITS.length; i++) {
+            System.out.println((i + 1) + ": " + Card.SUITS[i]);
+        }
+        int suit = input.nextInt();
+        
+        System.out.print("Guess a value 1-13!");
+        int value = input.nextInt();
+        
+        Card userGuess = new Card(value, Card.SUITS[suit - 1]);
 
         // insert code to ask the user for Card value and suit, create their card
         // and search the hand here. 
@@ -39,12 +51,12 @@ public class CardTrick {
         // Then loop through the cards in the array to see if there's a match.
         
         // If the guess is successful, invoke the printInfo() method below.
-        for (int n = 0; n < hand.length; n++){
-            if(valueInput.equals(hand[n].getValue())){
-                if(suitInput.equals(hand[n].getValue()))
-                    printInfo();
-            }
-           
+        boolean match = false;
+        for (Card card: hand){
+           if (card.getValue() == userGuess.getValue() && card.getSuit().equals(userGuess.getSuit())) {
+               match = true;
+               break;
+           }
         }
     }
 
